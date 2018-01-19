@@ -57,18 +57,39 @@ void draw() {
 void tick_input(GLFWwindow *window) {
     int left  = glfwGetKey(window, GLFW_KEY_LEFT);
     int right = glfwGetKey(window, GLFW_KEY_RIGHT);
+    int up    = glfwGetKey(window, GLFW_KEY_UP);
+    int down    = glfwGetKey(window, GLFW_KEY_DOWN);
+
     if (left) {
-        // Do something
+        ball1.position.x -=3*ball1.speed ;
+    }
+
+    if (right){
+        ball1.position.x +=3*ball1.speed;
+    }
+
+    if (up) {
+        ball1.position.y += 3*ball1.speed ;
+    }
+
+    if (down) {
+        ball1.position.y -=3*ball1.speed ;
     }
 }
 
-void tick_elements() {
+bool tick_elements() {
     ball1.tick();
-    ball2.tick();
+    // ball2.tick(); //Stop moving the ball 
     if (detect_collision(ball1.bounding_box(), ball2.bounding_box())) {
+
         ball1.speed = -ball1.speed;
         ball2.speed = -ball2.speed;
+        
+        return true;
     }
+
+    else 
+        return false;
 }
 
 /* Initialize the OpenGL rendering properties */
@@ -77,8 +98,8 @@ void initGL(GLFWwindow *window, int width, int height) {
     /* Objects should be created before any other gl function and shaders */
     // Create the models
 
-    ball1       = Ball(2, 0, COLOR_RED);
-    ball2       = Ball(-2, 0, COLOR_RED);
+    ball1       = Ball(2, -2, COLOR_RED);
+    ball2       = Ball(0, 0, COLOR_GREEN);
     ball2.speed = -ball2.speed;
 
     // Create and compile our GLSL program from the shaders
@@ -123,7 +144,9 @@ int main(int argc, char **argv) {
             // Swap Frame Buffer in double buffering
             glfwSwapBuffers(window);
 
-            tick_elements();
+            if(tick_elements())
+                return 0;
+
             tick_input(window);
         }
 
@@ -138,6 +161,7 @@ bool detect_collision(bounding_box_t a, bounding_box_t b) {
     return (abs(a.x - b.x) * 2 < (a.width + b.width)) &&
            (abs(a.y - b.y) * 2 < (a.height + b.height));
 }
+
 
 void reset_screen() {
     float top    = screen_center_y + 4 / screen_zoom;

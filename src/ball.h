@@ -16,7 +16,7 @@ public:
     double speed;
     bounding_box_t bounding_box();
 private:
-    VAO *object;
+    VAO *object;    // How an object looks 
 };
 
 #endif // BALL_H
