@@ -1,13 +1,18 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#include <stdlib.h>
 #include <iostream>
 #include <cmath>
 #include <fstream>
 #include <vector>
+#include <string>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include <GL/glut.h>
+
+
 
 #define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
@@ -74,12 +79,22 @@ struct bounding_box_t {
 bool detect_collision(bounding_box_t a, bounding_box_t b);
 
 extern float screen_zoom, screen_center_x, screen_center_y;
-void reset_screen();
+extern double mouse_x,mouse_y;
+extern int mouse_action;
+void reset_screen(float ratio);
 
 // ---- Colors ----
 extern const color_t COLOR_RED;
 extern const color_t COLOR_GREEN;
 extern const color_t COLOR_BLACK;
+extern const color_t COLOR_YELLOW;
 extern const color_t COLOR_BACKGROUND;
+extern const color_t COLOR_BLUE;
+extern const color_t COLOR_BROWN;
+
+
+extern int main_score;
+
+
 
 #endif

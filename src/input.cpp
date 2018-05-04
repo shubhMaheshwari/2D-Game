@@ -63,13 +63,19 @@ void keyboardChar(GLFWwindow *window, unsigned int key) {
 
 /* Executed when a mouse button is pressed/released */
 void mouseButton(GLFWwindow *window, int button, int action, int mods) {
+    
     switch (button) {
     case GLFW_MOUSE_BUTTON_LEFT:
         if (action == GLFW_PRESS) {
-            // Do something
+            mouse_action = 1;
+            glfwGetCursorPos(window, &mouse_x, &mouse_y);
+            mouse_x = mouse_x/100.0 -8;
+            mouse_y = mouse_y/100.0 -4; 
             return;
         } else if (action == GLFW_RELEASE) {
             // Do something
+            mouse_action = 0;
+
         }
         break;
     // case GLFW_MOUSE_BUTTON_RIGHT:
@@ -83,5 +89,11 @@ void mouseButton(GLFWwindow *window, int button, int action, int mods) {
 }
 
 void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
-    // Do something
+    
+    if(yoffset == 1)
+        screen_zoom += 0.1;
+
+    else if(yoffset == -1)
+        screen_zoom -= 0.1;
+
 }

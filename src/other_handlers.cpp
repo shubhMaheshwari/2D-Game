@@ -20,6 +20,7 @@ void error_callback(int error, const char *description) {
 }
 
 void quit(GLFWwindow *window) {
+    printf("SCORE:%d\n",main_score );
     glfwDestroyWindow(window);
     glfwTerminate();
     exit(EXIT_SUCCESS);
@@ -47,5 +48,5 @@ void reshapeWindow(GLFWwindow *window, int width, int height) {
     // Matrices.projection = glm::perspective (fov, (GLfloat) fbwidth / (GLfloat) fbheight, 0.1f, 500.0f);
 
     // Ortho projection for 2D views
-    reset_screen();
+    reset_screen(width/height);
 }
